@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Analysis</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='attendance_analysis.js') }}"></script>
+    <script id="attendanceData" type="application/json">
+        {{ attendance_data | tojson | safe }}
+    </script>
+    
+</head>
+<body>
+    
+
+<header>
+    <div class="navbar">
+        <a href="{{ url_for('index') }}">
+            <span class="material-icons-sharp">home</span>
+            <h3>Home</h3>
+        </a>
+        <a href="{{ url_for('mark_attendance') }}">
+            <span class="material-icons-sharp">check_circle</span>
+            <h3>Mark Attendance</h3>
+        </a>
+        <a href="{{ url_for('attendance_analysis') }}" class="active">
+            <span class="material-icons-sharp">bar_chart</span>
+            <h3>Attendance Analysis</h3>
+        </a>
+        <a href="{{ url_for('index') }}">
+            <span class="material-icons-sharp">add_circle</span>
+            <h3>Add Announcement</h3>
+        </a>
+        <a href="{{ url_for('index') }}">
+            <span class="material-icons-sharp" onclick="">logout</span>
+            <h3>Logout</h3>
+        </a>
+    </div>
+    <div id="profile-btn">
+        <span class="material-icons-sharp">person</span>
+    </div>
+    <div class="theme-toggler">
+        <span class="material-icons-sharp active">light_mode</span>
+        <span class="material-icons-sharp">dark_mode</span>
+    </div>
+</header>
+<div class="container">
+    <aside>
+        <div class="profile">
+            <div class="top">
+                <div class="profile-photo">
+                    <img src="{{ url_for('static', filename='/images/profile-2.jpeg') }}" alt="">
+                </div>
+                <div class="info">
+                    <p>Hey, <b>{{ teacher_data['name'] }}</b></p>
+                    <small class="text-muted">Teacher ID {{ teacher_data['teacher_id'] }}</small>
+                </div>
+            </div>
+            <div class="about">
+                <h3>Email: {{ teacher_data['email'] }}</h3>
+                <h3>Subject: {{ teacher_data['subject'] }}</h3>
+            </div>
+        </div>
+    </aside>
+    <main>
+        <!-- Add specific content for teacher dashboard -->
+        <h1>Welcome, {{ teacher_data['name'] }}!</h1>
+        <!-- Add sections for marking attendance, attendance analysis, and announcements -->
+        <h1>Attendance Analysis</h1>
+
+        <!-- Add a canvas for the pie chart -->
+        <canvas id="attendancePieChart" width="100" height="100"></canvas>
+    </main>
+    <div class="right">
+        <!-- Add additional sections for teacher-specific information -->
+        <div class="announcements">
+            <h2>Announcements</h2>
+            <div class="updates">
+                <!-- Iterate through announcements_data to display announcements -->
+                {% for announcement in announcements_data %}
+                    <div class="message">
+                        <p><b>{{ announcement.sender }}</b> {{ announcement.message }}</p>
+                        <small class="text-muted">{{ announcement.time_ago }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

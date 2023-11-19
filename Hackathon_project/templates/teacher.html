@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="{{ url_for('index') }}" class="active">
+                <span class="material-icons-sharp">home</span>
+                <h3>Home</h3>
+            </a>
+            <a href="{{ url_for('mark_attendance') }}">
+                <span class="material-icons-sharp">check_circle</span>
+                <h3>Mark Attendance</h3>
+            </a>
+            <a href="{{ url_for('attendance_analysis') }}">
+                <span class="material-icons-sharp">bar_chart</span>
+                <h3>Attendance Analysis</h3>
+            </a>
+            <a href="{{ url_for('add_announcement') }}">
+                <span class="material-icons-sharp">add_circle</span>
+                <h3>Add Announcement</h3>
+            </a>
+            <a href="{{ url_for('index') }}">
+                <span class="material-icons-sharp" onclick="">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+        <div id="profile-btn">
+            <span class="material-icons-sharp">person</span>
+        </div>
+        <div class="theme-toggler">
+            <span class="material-icons-sharp active">light_mode</span>
+            <span class="material-icons-sharp">dark_mode</span>
+        </div>
+    </header>
+    <div class="container">
+        <aside>
+            <div class="profile">
+                <div class="top">
+                    <div class="profile-photo">
+                        <img src="{{ url_for('static', filename='/images/profile-2.jpeg') }}" alt="">
+                    </div>
+                    <div class="info">
+                        <p>Hey, <b>{{ teacher_data['name'] }}</b></p>
+                        <small class="text-muted">Teacher ID {{ teacher_data['teacher_id'] }}</small>
+                    </div>
+                </div>
+                <div class="about">
+                    <h3>Email: {{ teacher_data['email'] }}</h3>
+                    <h3>Subject: {{ teacher_data['subject'] }}</h3>
+                </div>
+            </div>
+        </aside>
+            <main style="display: flex;">
+                <!-- Add specific content for teacher dashboard -->
+                <h1 style="text-align: end;">Welcome, {{ teacher_data['name'] }}!</h1>
+            
+                <!-- Section for Quick Stats -->
+                <div class="subjects">
+                    <div class="eg1" style="width: 300px; margin-top: 80px;">
+                    <h2 >Quick Stats</h2>
+                    <!-- Display attendance summary, total students, etc. -->
+                    <h3>Total Students: {{ total_students }}</h3>
+                    <h3>Present Today: {{ present_students_today }}</h3>
+                    <h3>Absent Today: {{ absent_students_today }}</h3>
+                    </div>
+                </div>
+            
+                <!-- Section for Upcoming Events or Classes -->
+                <div class="subjects" >
+                    <div class="eg1" style="width: 300px; margin-top: 80px;">
+                    <h2>Upcoming Events</h2>
+                    
+                    {% for event in upcoming_events %}
+                        <h3 style="width: 200px;">{{ event['name'] }} - {{ event['date'] }} at {{ event['time'] }}</h3>
+                    {% endfor %}
+                    </div>
+                </div>
+            
+                <!-- Section for Recent Attendance Analysis -->
+                <!-- <section>
+                    <h2>Recent Attendance Analysis</h2>
+            
+                    <p>Attendance Rate: {{ attendance_rate }}%</p>
+                    
+                </section> -->
+            
+                <!-- Add more sections based on your requirements -->
+            
+            </main>
+        <div class="right">
+            <!-- Add additional sections for teacher-specific information -->
+            <div class="announcements">
+                <h2>Announcements</h2>
+                <div class="updates">
+                    <!-- Iterate through announcements_data to display announcements -->
+                    {% for announcement in announcements_data %}
+                        <div class="message">
+                            <p><b>{{ announcement['user_id'] }}</b> {{ announcement['message'] }}</p>
+                            <!-- <small class="text-muted">{{ announcement['subject'] }}</small> -->
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

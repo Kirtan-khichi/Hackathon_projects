@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Register</h2>
+    <form class="register-form" method="post" action="{{ url_for('register') }}">
+        <!-- Add a hidden input for is_logged_in -->
+        <input type="hidden" name="is_logged_in" value="{{ is_logged_in }}">
+        
+        <div class="name-section">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="middle_name" placeholder="Middle Name">
+            <input type="text" name="last_name" placeholder="Last Name" required>
+        </div>
+        <div class="gender-section">
+            <select name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <input type="text" name="school_name" placeholder="School Name" required>
+        <input type="text" name="erp_id" placeholder="ERP ID" required>
+        <input type="text" name="mobile_number" placeholder="Mobile Number" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{{ url_for('index') }}">Login</a></p>
+</div>
+
+</body>
+</html>

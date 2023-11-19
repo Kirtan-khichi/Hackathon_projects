@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-In Successful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div id="header">
+    <h1>Check-In Successful</h1>
+</div>
+
+<div id="content">
+    <p>Your check-in was successful. Thank you!</p>
+</div>
+
+
+<nav id="navbar">
+    <div class="navbar-left">
+        <h1>Welcome to the Academic Portal</h1>
+    </div>
+    <div class="navbar-right">
+        <a href="{{ url_for('signout') }}">Sign Out</a>
+    </div>
+</nav>
+
+<div id="content">
+    <h2>Check-In</h2>
+    <p>Click the button below to check in for today's class:</p>
+    <!-- Add data attributes for latitude and longitude -->
+    <button id="checkInButton">Check In</button>
+    <br><br>
+    <!-- Display the check-in button only if the user is logged in -->
+    {% if is_logged_in %}
+        <a href="{{ url_for('checkin') }}"><button>Check In</button></a>
+    {% endif %}
+</div>
+
+</body>
+</html>

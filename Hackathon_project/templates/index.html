@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='timeTable.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="{{ url_for('index') }}" class="active">
+                <span class="material-icons-sharp">home</span>
+                <h3>Home</h3>
+            </a>
+            <a href="{{ url_for('timetable') }}" onclick="timeTableAll()">
+                <span class="material-icons-sharp">today</span>
+                <h3>Time Table</h3>
+            </a> 
+            <a href="{{ url_for('exam') }}">
+                <span class="material-icons-sharp">grid_view</span>
+                <h3>Examination</h3>
+            </a>
+            <a href="{{ url_for('checkin') }}">
+                <span class="material-icons-sharp">password</span>
+                <h3>Check In</h3>
+            </a>
+            <a href="{{ url_for('forgot_password') }}">
+                <span class="material-icons-sharp" onclick="">logout</span>
+                <h3>Logout</h3>
+            </a>
+            <!-- Add other navigation links as needed -->
+        </div>
+        <div id="profile-btn">
+            <span class="material-icons-sharp">person</span>
+        </div>
+        <div class="theme-toggler">
+            <span class="material-icons-sharp active">light_mode</span>
+            <span class="material-icons-sharp">dark_mode</span>
+        </div>
+    </header>
+    <div class="container">
+        <aside>
+            <div class="profile">
+                <div class="top">
+                    <div class="profile-photo">
+                        <!-- Add logic to display user profile photo -->
+                        <img src="{{ url_for('static', filename='images/kirtan_photo.JPG') }}" alt="">
+                    </div>
+                    <div class="info">
+                        <!-- Display user-related data -->
+                        <p>Hey, <b>{{ user_data['first_name'] }}</b></p>
+
+                        <small class="text-muted">Erp id {{ user_data['erp_id'] }}</small>
+                        
+                    </div>
+                </div>
+                <div class="about">
+                    <!-- Display other user details such as course, DOB, contact, email, and address -->
+                    <h3>Mobile number: {{ user_data['mobile_number'] }}</h3>
+                    <h3>{{ user_data['email'] }}</h3>
+                    <h3>Gender: {{ user_data['gender'] }}</h3>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <h1>Recent-Attendance</h1>
+            <div class="subjects">
+                <!-- Iterate through attendance_data to display subjects and attendance details -->
+                {% for data in user_data1 %}
+
+                    <div class="eg">
+                        <!-- {{ id }} -->
+                        <span class="material-icons-sharp">today</span>
+
+                        <h3>Class</h3>
+                        <h3> {{ data['class'] }}</h3>
+                        <h3>Date</h3>
+                        <h3>{{ data['date'] }}</h3>
+                        <h3>Status</h3>
+                        <h3>{{ data['status'] }}</h3>
+                        <h3>Location</h3>
+                        <h3>{{ data['longitude'] }}</h3>
+                        <h3>{{ data['latitude'] }}</h3>
+                        <!-- Add progress bar logic -->
+                    </div>
+                {% endfor %}
+            </div>
+            
+            
+        </main>
+        <div class="right">
+            <div class="announcements">
+                <h2>Announcements</h2>
+                <div class="updates">
+                    <!-- Iterate through announcements_data to display announcements -->
+                    {% for announcement in announcements_data %}
+                        <div class="message">
+                            <p><b>{{ announcement['user_id'] }}</b> {{ announcement['message'] }}</p>
+                            <small class="text-muted">{{ announcement['subject'] }}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='timeTable.js') }}"></script>
+    
+    <!-- <script src="{{ url_for('static', filename='checkin.js') }}"></script> -->
+</body>
+</html>
